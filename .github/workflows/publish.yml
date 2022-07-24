@@ -8,9 +8,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: yarn
-      - run: yarn build
-      - run: yarn test
+      - run: yarn --frozen-lockfile
+      - run: yarn add -P typeorm
+      - run: yarn run lint
+      - run: yarn run test
+      - run: yarn run build
+      - run: yarn run semantic-release || true
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_KEY }}
+          access: public
